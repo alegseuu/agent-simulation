@@ -12,8 +12,7 @@ class Star extends MassObject {
 
 
 
-    public int getLifeExpectancy() {
-        return lifeExpectancy;
+    public int getLifeExpectancy() {return lifeExpectancy;
     }
 
     public void setLifeExpectancy(int lifeExpectancy) {
@@ -54,7 +53,7 @@ class Star extends MassObject {
         position[1] += velocity[1];
         return position;
     }
-
+    /*
     public void checkStarAge(int years) {
         if (getAge() + years > lifeExpectancy) {
             // Transform into a black hole
@@ -67,4 +66,6 @@ class Star extends MassObject {
             setAge(getAge() + years);
         }
     }
+
+     */
 }

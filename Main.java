@@ -10,7 +10,7 @@ public class Main {
         int numStars = getInput("Enter the number of Stars: ");
         int numPlanets = getInput("Enter the number of Planets: ");
         int numMoons = getInput("Enter the number of Moons: ");
-        int numIterations = getInput("Enter the number of iterations: ") * 100;
+        int numIterations = getInput("Enter the number of iterations: ") * 100; //czemu wlasciwie razy 100?
 
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
@@ -21,28 +21,36 @@ public class Main {
         // Perform simulation iterations
         for (int i = 1; i <= numIterations; i++) {
             // Update positions and velocities of objects
-            updatePositionsAndVelocities(blackHoles, stars, planets, moons);
+            //updatePositionsAndVelocities(blackHoles, stars, planets, moons);
 
             // Print the current state of the simulation
             printSimulationState(i, blackHoles, stars, planets, moons);
         }
     }
 
-    private static int getInput(String prompt) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print(prompt);
-        return scanner.nextInt();
-    }
+    //simulation parameters
+    private static final int maxX = 1000; //wywalam w jedno miejsce
+    private static final int maxY = 1000;
+    private static final int maxBHMass = 100;
+    private static final int maxBHAge = 100;
+    private static final int maxStarMass = 100;
+    private static final int maxStarAge = 100;
+    private static final int maxLifeExpectancy = 1000;
+    private static final int maxPlanetMass = 100;
+    private static final int maxPlanetAge = 100;
+    private static final int maxMoonMass = 100;
+    private static final int maxMoonAge = 100;
 
     private static BlackHole[] createBlackHoles(int numBlackHoles) {
         BlackHole[] blackHoles = new BlackHole[numBlackHoles];
         Random random = new Random();
-        int maxX = 1000;
-        int maxY = 1000;
 
         for (int i = 0; i < numBlackHoles; i++) {
             int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
-            blackHoles[i] = new BlackHole(position);
+            int mass = random.nextInt(maxBHMass);
+            int age = random.nextInt(maxBHAge);
+            String name = "black_hole1" + Integer.toString(i);
+            blackHoles[i] = new BlackHole(mass, age, name, position);
         }
 
         return blackHoles;
@@ -51,16 +59,15 @@ public class Main {
     private static Star[] createStars(int numStars) {
         Star[] stars = new Star[numStars];
         Random random = new Random();
-        int maxX = 1000;
-        int maxY = 1000;
 
         for (int i = 0; i < numStars; i++) {
-            int mass = random.nextInt(100);
-            int age = random.nextInt(100);
-            int lifeExpectancy = random.nextInt(1000);
+            int mass = random.nextInt(maxStarMass);
+            int age = random.nextInt(maxStarAge);
+            int lifeExpectancy = random.nextInt(maxLifeExpectancy);
             double[] velocity = {0.0, 0.0};
             int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
-            stars[i] = new Star(mass, age, lifeExpectancy, velocity, position);
+            String name = "Star" + Integer.toString(i);
+            stars[i] = new Star(mass, age, lifeExpectancy, velocity, position, name);
         }
 
         return stars;
@@ -69,13 +76,11 @@ public class Main {
     private static Planet[] createPlanets(int numPlanets) {
         Planet[] planets = new Planet[numPlanets];
         Random random = new Random();
-        int maxX = 1000;
-        int maxY = 1000;
 
         for (int i = 0; i < numPlanets; i++) {
-            int mass = random.nextInt(100);
-            int age = random.nextInt(100);
-            String name = "Planet";
+            int mass = random.nextInt(maxPlanetMass);
+            int age = random.nextInt(maxPlanetAge);
+            String name = "Planet" + Integer.toString(i);
             double[] velocity = {0.0, 0.0};
             int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             planets[i] = new Planet(mass, age, name, velocity, position);
@@ -87,13 +92,11 @@ public class Main {
     private static Moon[] createMoons(int numMoons) {
         Moon[] moons = new Moon[numMoons];
         Random random = new Random();
-        int maxX = 1000;
-        int maxY = 1000;
 
         for (int i = 0; i < numMoons; i++) {
-            int mass = random.nextInt(100);
-            int age = random.nextInt(100);
-            String name = "Moon";
+            int mass = random.nextInt(maxMoonMass);
+            int age = random.nextInt(maxMoonAge);
+            String name = "Moon" + Integer.toString(i);
             double[] velocity = {0.0, 0.0};
             int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             moons[i] = new Moon(mass, age, name, velocity, position);
@@ -101,7 +104,7 @@ public class Main {
 
         return moons;
     }
-
+/*
     private static void updatePositionsAndVelocities(BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
         // Update positions and velocities of black holes
         for (BlackHole blackHole : blackHoles) {
@@ -146,7 +149,7 @@ public class Main {
             moon.updatePosition();
         }
     }
-
+*/
     private static void printSimulationState(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
         System.out.println("Iteration: " + iteration);
 
@@ -178,6 +181,12 @@ public class Main {
         }
 
         System.out.println();
+    }
+
+    private static int getInput(String prompt) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(prompt);
+        return scanner.nextInt();
     }
 
 }

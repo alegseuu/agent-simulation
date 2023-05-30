@@ -1,5 +1,5 @@
 class BlackHole extends MassObject {
-    public BlackHole(int[] position) {
-        super(0, 0, "Black Hole", position);
+    public BlackHole(int mass, int age, String name, int[] position) {
+        super(mass, age, name, position);
     }
 }
