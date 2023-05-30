@@ -1,0 +1,183 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        // Get input from the user
+        int numBlackHoles = getInput("Enter the number of BlackHoles: ");
+        int numStars = getInput("Enter the number of Stars: ");
+        int numPlanets = getInput("Enter the number of Planets: ");
+        int numMoons = getInput("Enter the number of Moons: ");
+        int numIterations = getInput("Enter the number of iterations: ") * 100;
+
+        // Create the objects
+        BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
+        Star[] stars = createStars(numStars);
+        Planet[] planets = createPlanets(numPlanets);
+        Moon[] moons = createMoons(numMoons);
+
+        // Perform simulation iterations
+        for (int i = 1; i <= numIterations; i++) {
+            // Update positions and velocities of objects
+            updatePositionsAndVelocities(blackHoles, stars, planets, moons);
+
+            // Print the current state of the simulation
+            printSimulationState(i, blackHoles, stars, planets, moons);
+        }
+    }
+
+    private static int getInput(String prompt) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(prompt);
+        return scanner.nextInt();
+    }
+
+    private static BlackHole[] createBlackHoles(int numBlackHoles) {
+        BlackHole[] blackHoles = new BlackHole[numBlackHoles];
+        Random random = new Random();
+        int maxX = 1000;
+        int maxY = 1000;
+
+        for (int i = 0; i < numBlackHoles; i++) {
+            int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
+            blackHoles[i] = new BlackHole(position);
+        }
+
+        return blackHoles;
+    }
+
+    private static Star[] createStars(int numStars) {
+        Star[] stars = new Star[numStars];
+        Random random = new Random();
+        int maxX = 1000;
+        int maxY = 1000;
+
+        for (int i = 0; i < numStars; i++) {
+            int mass = random.nextInt(100);
+            int age = random.nextInt(100);
+            int lifeExpectancy = random.nextInt(1000);
+            double[] velocity = {0.0, 0.0};
+            int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
+            stars[i] = new Star(mass, age, lifeExpectancy, velocity, position);
+        }
+
+        return stars;
+    }
+
+    private static Planet[] createPlanets(int numPlanets) {
+        Planet[] planets = new Planet[numPlanets];
+        Random random = new Random();
+        int maxX = 1000;
+        int maxY = 1000;
+
+        for (int i = 0; i < numPlanets; i++) {
+            int mass = random.nextInt(100);
+            int age = random.nextInt(100);
+            String name = "Planet";
+            double[] velocity = {0.0, 0.0};
+            int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
+            planets[i] = new Planet(mass, age, name, velocity, position);
+        }
+
+        return planets;
+    }
+
+    private static Moon[] createMoons(int numMoons) {
+        Moon[] moons = new Moon[numMoons];
+        Random random = new Random();
+        int maxX = 1000;
+        int maxY = 1000;
+
+        for (int i = 0; i < numMoons; i++) {
+            int mass = random.nextInt(100);
+            int age = random.nextInt(100);
+            String name = "Moon";
+            double[] velocity = {0.0, 0.0};
+            int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
+            moons[i] = new Moon(mass, age, name, velocity, position);
+        }
+
+        return moons;
+    }
+
+    private static void updatePositionsAndVelocities(BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
+        // Update positions and velocities of black holes
+        for (BlackHole blackHole : blackHoles) {
+            // Black holes do not move, so no update is needed
+        }
+
+        // Update positions and velocities of stars
+        for (Star star : stars) {
+            double[] netForce = {0.0, 0.0};
+            for (BlackHole blackHole : blackHoles) {
+                double[] attractionForce = calculateForce(blackHole.getPosition(), blackHole.getMass(), star.getMass(), calculateDistance(blackHole.getPosition(), star.getPosition()));
+                netForce[0] += attractionForce[0];
+                netForce[1] += attractionForce[1];
+            }
+            star.setVelocity(calculateVelocity(netForce));
+            star.setPosition(star.nextPosition());
+        }
+
+        // Update positions and velocities of planets
+        for (Planet planet : planets) {
+            double[] force = {0.0, 0.0};
+            for (Star star : stars) {
+                double[] attractionForce = planet.calculateForce(star.getPosition(), star.getMass(), planet.getMass(), planet.getDistance());
+                force[0] += attractionForce[0];
+                force[1] += attractionForce[1];
+            }
+            planet.setForce(force);
+            planet.updateVelocity();
+            planet.updatePosition();
+        }
+
+        // Update positions and velocities of moons
+        for (Moon moon : moons) {
+            double[] force = {0.0, 0.0};
+            for (Planet planet : planets) {
+                double[] attractionForce = moon.calculateForce(planet.getPosition(), planet.getMass(), moon.getMass(), moon.getDistance());
+                force[0] += attractionForce[0];
+                force[1] += attractionForce[1];
+            }
+            moon.setForce(force);
+            moon.updateVelocity();
+            moon.updatePosition();
+        }
+    }
+
+    private static void printSimulationState(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
+        System.out.println("Iteration: " + iteration);
+
+        System.out.println("Black Holes:");
+        for (BlackHole blackHole : blackHoles) {
+            System.out.println("Position: " + Arrays.toString(blackHole.getPosition()));
+            // Print additional information about the black hole if needed
+        }
+
+        System.out.println("Stars:");
+        for (Star star : stars) {
+            System.out.println("Name: " + star.getName());
+            System.out.println("Position: " + Arrays.toString(star.getPosition()));
+            // Print additional information about the star if needed
+        }
+
+        System.out.println("Planets:");
+        for (Planet planet : planets) {
+            System.out.println("Name: " + planet.getName());
+            System.out.println("Position: " + Arrays.toString(planet.getPosition()));
+            // Print additional information about the planet if needed
+        }
+
+        System.out.println("Moons:");
+        for (Moon moon : moons) {
+            System.out.println("Name: " + moon.getName());
+            System.out.println("Position: " + Arrays.toString(moon.getPosition()));
+            // Print additional information about the moon if needed
+        }
+
+        System.out.println();
+    }
+
+}
