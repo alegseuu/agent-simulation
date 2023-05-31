@@ -3,6 +3,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import java.awt.Canvas;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+import java.awt.Color;
+
 public class Main {
     public static void main(String[] args) {
         // Get input from the user
@@ -10,7 +15,7 @@ public class Main {
         int numStars = getInput("Enter the number of Stars: ");
         int numPlanets = getInput("Enter the number of Planets: ");
         int numMoons = getInput("Enter the number of Moons: ");
-        int numIterations = getInput("Enter the number of iterations: ") * 100; //czemu wlasciwie razy 100?
+        int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
 
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
@@ -18,19 +23,19 @@ public class Main {
         Planet[] planets = createPlanets(numPlanets);
         Moon[] moons = createMoons(numMoons);
 
+
         // Perform simulation iterations
         for (int i = 1; i <= numIterations; i++) {
             // Update positions and velocities of objects
             //updatePositionsAndVelocities(blackHoles, stars, planets, moons);
-
             // Print the current state of the simulation
             printSimulationState(i, blackHoles, stars, planets, moons);
         }
     }
 
     //simulation parameters
-    private static final int maxX = 1000; //wywalam w jedno miejsce
-    private static final int maxY = 1000;
+    private static final int maxX = 10; //wywalam w jedno miejsce
+    private static final int maxY = 10;
     private static final int maxBHMass = 100;
     private static final int maxBHAge = 100;
     private static final int maxStarMass = 100;
@@ -150,10 +155,18 @@ public class Main {
         }
     }
 */
-    private static void printSimulationState(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
-        System.out.println("Iteration: " + iteration);
 
-        System.out.println("Black Holes:");
+    private static void printSimulationState(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
+        JFrame frame = new JFrame("My Drawing");
+        Canvas canvas = new Drawing();
+        canvas.setSize(1500, 800);
+        canvas.setBackground(Color.black);
+        frame.add(canvas);
+        frame.pack();
+        frame.setVisible(true);
+
+
+        /*System.out.println("Black Holes:");
         for (BlackHole blackHole : blackHoles) {
             System.out.println("Position: " + Arrays.toString(blackHole.getPosition()));
             // Print additional information about the black hole if needed
@@ -181,6 +194,8 @@ public class Main {
         }
 
         System.out.println();
+
+         */
     }
 
     private static int getInput(String prompt) {
