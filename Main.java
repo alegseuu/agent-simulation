@@ -10,12 +10,19 @@ import java.awt.Color;
 
 public class Main {
     public static void main(String[] args) {
+        /*
         // Get input from the user
         int numBlackHoles = getInput("Enter the number of BlackHoles: ");
         int numStars = getInput("Enter the number of Stars: ");
         int numPlanets = getInput("Enter the number of Planets: ");
         int numMoons = getInput("Enter the number of Moons: ");
         int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
+        */
+        int numBlackHoles = 10;
+        int numStars = 10;
+        int numPlanets = 10;
+        int numMoons = 10;
+        int numIterations = 1;
 
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
@@ -29,13 +36,60 @@ public class Main {
             // Update positions and velocities of objects
             //updatePositionsAndVelocities(blackHoles, stars, planets, moons);
             // Print the current state of the simulation
-            printSimulationState(i, blackHoles, stars, planets, moons);
+            printSimulationState(i, numBlackHoles, numStars, numPlanets,  numMoons, blackHoles, stars, planets, moons);
         }
     }
 
+
+    private static void printSimulationState(int iteration, int numBH, int numStars, int numPlanets, int numMoons,
+                                             BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
+        JFrame frame = new JFrame("Kosmos");
+        Canvas canvas = new Drawing();
+        canvas.setSize(1500, 800);
+        canvas.setBackground(Color.black);
+        frame.add(canvas);
+        frame.pack();
+        frame.setVisible(true);
+        int n = 2, n1=0, n2=0, n3=0;
+        ((Drawing) canvas).getParameters(numBH, numStars, numPlanets, numMoons, blackHoles, stars, planets, moons);
+        //((Drawing) canvas).numBH = numBlackHoles;
+
+
+        /*System.out.println("Black Holes:");
+        for (BlackHole blackHole : blackHoles) {
+            System.out.println("Position: " + Arrays.toString(blackHole.getPosition()));
+            // Print additional information about the black hole if needed
+        }
+
+        System.out.println("Stars:");
+        for (Star star : stars) {
+            System.out.println("Name: " + star.getName());
+            System.out.println("Position: " + Arrays.toString(star.getPosition()));
+            // Print additional information about the star if needed
+        }
+
+        System.out.println("Planets:");
+        for (Planet planet : planets) {
+            System.out.println("Name: " + planet.getName());
+            System.out.println("Position: " + Arrays.toString(planet.getPosition()));
+            // Print additional information about the planet if needed
+        }
+
+        System.out.println("Moons:");
+        for (Moon moon : moons) {
+            System.out.println("Name: " + moon.getName());
+            System.out.println("Position: " + Arrays.toString(moon.getPosition()));
+            // Print additional information about the moon if needed
+        }
+
+        System.out.println();
+
+         */
+    }
+
     //simulation parameters
-    private static final int maxX = 10; //wywalam w jedno miejsce
-    private static final int maxY = 10;
+    private static final int maxX = 1500; //wywalam w jedno miejsce
+    private static final int maxY = 800;
     private static final int maxBHMass = 100;
     private static final int maxBHAge = 100;
     private static final int maxStarMass = 100;
@@ -156,47 +210,6 @@ public class Main {
     }
 */
 
-    private static void printSimulationState(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
-        JFrame frame = new JFrame("My Drawing");
-        Canvas canvas = new Drawing();
-        canvas.setSize(1500, 800);
-        canvas.setBackground(Color.black);
-        frame.add(canvas);
-        frame.pack();
-        frame.setVisible(true);
-
-
-        /*System.out.println("Black Holes:");
-        for (BlackHole blackHole : blackHoles) {
-            System.out.println("Position: " + Arrays.toString(blackHole.getPosition()));
-            // Print additional information about the black hole if needed
-        }
-
-        System.out.println("Stars:");
-        for (Star star : stars) {
-            System.out.println("Name: " + star.getName());
-            System.out.println("Position: " + Arrays.toString(star.getPosition()));
-            // Print additional information about the star if needed
-        }
-
-        System.out.println("Planets:");
-        for (Planet planet : planets) {
-            System.out.println("Name: " + planet.getName());
-            System.out.println("Position: " + Arrays.toString(planet.getPosition()));
-            // Print additional information about the planet if needed
-        }
-
-        System.out.println("Moons:");
-        for (Moon moon : moons) {
-            System.out.println("Name: " + moon.getName());
-            System.out.println("Position: " + Arrays.toString(moon.getPosition()));
-            // Print additional information about the moon if needed
-        }
-
-        System.out.println();
-
-         */
-    }
 
     private static int getInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
