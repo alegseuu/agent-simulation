@@ -16,7 +16,7 @@ public class Drawing extends Canvas {
     static Color moon_color = Color.green;
 
     public static void main(String[] args) {
-        Drawing.getParameters(black_holes_number, stars_number, planets_number, moons_number, blackHoles1, stars1, planets1, moons1);
+
     }
 
     public static void getParameters(int numBlackHoles, int numStars, int numPlanets, int numMoons,
@@ -31,7 +31,13 @@ public class Drawing extends Canvas {
         moons1 = moons;
     };
 
+    public void updateDrawing(){
+        black_hole_color = Color.pink;
+        repaint();
+    }
+
     public void paint(Graphics g) {
+        Drawing.getParameters(black_holes_number, stars_number, planets_number, moons_number, blackHoles1, stars1, planets1, moons1);
         //black holes printing
         g.setColor(black_hole_color);
         for (int i = 0; i < black_holes_number; i++){

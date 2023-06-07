@@ -7,6 +7,8 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -30,7 +32,6 @@ public class Main {
         Planet[] planets = createPlanets(numPlanets);
         Moon[] moons = createMoons(numMoons);
 
-
         // Perform simulation iterations
         for (int i = 1; i <= numIterations; i++) {
             // Update positions and velocities of objects
@@ -39,7 +40,6 @@ public class Main {
             printSimulationState(i, numBlackHoles, numStars, numPlanets,  numMoons, blackHoles, stars, planets, moons);
         }
     }
-
 
     private static void printSimulationState(int iteration, int numBH, int numStars, int numPlanets, int numMoons,
                                              BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
@@ -50,42 +50,14 @@ public class Main {
         frame.add(canvas);
         frame.pack();
         frame.setVisible(true);
-        int n = 2, n1=0, n2=0, n3=0;
         ((Drawing) canvas).getParameters(numBH, numStars, numPlanets, numMoons, blackHoles, stars, planets, moons);
-        //((Drawing) canvas).numBH = numBlackHoles;
-
-
-        /*System.out.println("Black Holes:");
-        for (BlackHole blackHole : blackHoles) {
-            System.out.println("Position: " + Arrays.toString(blackHole.getPosition()));
-            // Print additional information about the black hole if needed
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-
-        System.out.println("Stars:");
-        for (Star star : stars) {
-            System.out.println("Name: " + star.getName());
-            System.out.println("Position: " + Arrays.toString(star.getPosition()));
-            // Print additional information about the star if needed
+        ((Drawing) canvas).updateDrawing();
         }
-
-        System.out.println("Planets:");
-        for (Planet planet : planets) {
-            System.out.println("Name: " + planet.getName());
-            System.out.println("Position: " + Arrays.toString(planet.getPosition()));
-            // Print additional information about the planet if needed
-        }
-
-        System.out.println("Moons:");
-        for (Moon moon : moons) {
-            System.out.println("Name: " + moon.getName());
-            System.out.println("Position: " + Arrays.toString(moon.getPosition()));
-            // Print additional information about the moon if needed
-        }
-
-        System.out.println();
-
-         */
-    }
 
     //simulation parameters
     private static final int maxX = 1500; //wywalam w jedno miejsce
@@ -209,8 +181,6 @@ public class Main {
         }
     }
 */
-
-
     private static int getInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(prompt);
