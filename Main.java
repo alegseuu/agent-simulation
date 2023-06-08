@@ -24,7 +24,7 @@ public class Main {
         int numStars = 10;
         int numPlanets = 10;
         int numMoons = 10;
-        int numIterations = 1;
+        int numIterations = 3;
 
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
@@ -32,16 +32,18 @@ public class Main {
         Planet[] planets = createPlanets(numPlanets);
         Moon[] moons = createMoons(numMoons);
 
+        Canvas canvas = printSimulationState(numIterations, numBlackHoles, numStars, numPlanets,  numMoons, blackHoles, stars, planets, moons);
+
         // Perform simulation iterations
         for (int i = 1; i <= numIterations; i++) {
-            // Update positions and velocities of objects
-            //updatePositionsAndVelocities(blackHoles, stars, planets, moons);
             // Print the current state of the simulation
-            printSimulationState(i, numBlackHoles, numStars, numPlanets,  numMoons, blackHoles, stars, planets, moons);
+            updateSimulationState((Drawing) canvas);
+            // Update positions and velocities of objects
+            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons);
         }
     }
 
-    private static void printSimulationState(int iteration, int numBH, int numStars, int numPlanets, int numMoons,
+    private static Drawing printSimulationState(int iteration, int numBH, int numStars, int numPlanets, int numMoons,
                                              BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
         JFrame frame = new JFrame("Kosmos");
         Canvas canvas = new Drawing();
@@ -51,15 +53,16 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
         ((Drawing) canvas).getParameters(numBH, numStars, numPlanets, numMoons, blackHoles, stars, planets, moons);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        ((Drawing) canvas).updateDrawing();
-        }
+        //updateSimulationState((Drawing) canvas);
+        return (Drawing) canvas;
+    }
 
-    //simulation parameters
+
+    private static void updateSimulationState(Drawing canvas){
+        canvas.updateDrawing();
+    }
+
+        //simulation parameters
     private static final int maxX = 1500; //wywalam w jedno miejsce
     private static final int maxY = 800;
     private static final int maxBHMass = 100;
@@ -135,13 +138,14 @@ public class Main {
 
         return moons;
     }
-/*
-    private static void updatePositionsAndVelocities(BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
+
+    private static void updatePositionsAndVelocities(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
         // Update positions and velocities of black holes
         for (BlackHole blackHole : blackHoles) {
-            // Black holes do not move, so no update is needed
-        }
-
+            blackHole.setX(blackHole.getX()+iteration);
+            blackHole.setY(blackHole.getY()+iteration);
+        }}
+/*
         // Update positions and velocities of stars
         for (Star star : stars) {
             double[] netForce = {0.0, 0.0};

@@ -50,4 +50,12 @@ class MassObject {
     public void setPosition(int[] position) {
         this.position = position;
     }
+
+    public void setX(int x) {
+        this.position[0] = x;
+    }
+    public void setY(int y) {
+        this.position[1] = y;
+    }
 }
+
