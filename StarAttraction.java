@@ -19,7 +19,22 @@ class StarAttraction {
         return Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
     }
 
-    public double[] calculateForce(double[] direction, double distance, double mass1, double mass2) {
+    public double getDistance(){return distance;};
+
+    public int[] getDirection(int[] position_star, int[] position_blackhole){
+        int[] direction = new int[2];
+        if(position_star[0]!=position_blackhole[0]){
+            direction[0] = (position_blackhole[0]-position_star[0])/Math.abs(position_blackhole[0]-position_star[0]);
+        }
+        else {direction[0] = 0;}
+        if(position_star[1]!=position_blackhole[1]){
+            direction[1] = (position_blackhole[1]-position_star[1])/Math.abs(position_blackhole[1]-position_star[1]);
+        }
+        else {direction[1] = 0;}
+        return direction;
+    }
+
+    public double[] calculateForce(int[] direction, double distance, double mass1, double mass2) {
         double gravitationalConstant = 6.67430e-11;
         double force = (gravitationalConstant * mass1 * mass2) / (distance * distance);
         double[] forceVector = {force * direction[0], force * direction[1]};

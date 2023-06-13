@@ -39,7 +39,23 @@ class MassObject {
         return position;
     }
 
+    public int getX() {
+        return position[0];
+    }
+
+    public int getY() {
+        return position[1];
+    }
+
     public void setPosition(int[] position) {
         this.position = position;
     }
+
+    public void setX(int x) {
+        this.position[0] = x;
+    }
+    public void setY(int y) {
+        this.position[1] = y;
+    }
 }
+
