@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -9,6 +6,7 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,7 +22,7 @@ public class Main {
         int numStars = 10;
         int numPlanets = 10;
         int numMoons = 10;
-        int numIterations = 3;
+        int numIterations = 20;
 
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
@@ -37,9 +35,14 @@ public class Main {
         // Perform simulation iterations
         for (int i = 1; i <= numIterations; i++) {
             // Print the current state of the simulation
-            updateSimulationState((Drawing) canvas);
+            updateSimulationState((Drawing) canvas, blackHoles, stars, planets, moons);
+            try {
+                Thread.sleep(1000); // Add a delay between iterations for visualization
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             // Update positions and velocities of objects
-            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons);
+            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons, numBlackHoles, numStars);
         }
     }
 
@@ -58,8 +61,8 @@ public class Main {
     }
 
 
-    private static void updateSimulationState(Drawing canvas){
-        canvas.updateDrawing();
+    private static void updateSimulationState(Drawing canvas, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons){
+        canvas.updateDrawing(blackHoles, stars, planets, moons);
     }
 
         //simulation parameters
@@ -139,18 +142,44 @@ public class Main {
         return moons;
     }
 
-    private static void updatePositionsAndVelocities(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
-        // Update positions and velocities of black holes
-        for (BlackHole blackHole : blackHoles) {
-            blackHole.setX(blackHole.getX()+iteration);
-            blackHole.setY(blackHole.getY()+iteration);
-        }}
+    private static void updatePositionsAndVelocities(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons,
+                                                     int numBlackholes, int numStars) {
+        // Update positions and velocities of stars
+        for (Star star : stars){
+            /*
+            int i = 0;
+            double[][] Forces = new double[numBlackholes][2];
+            for(BlackHole blackHole : blackHoles){
+                StarAttraction star_attraction = new StarAttraction();
+                star_attraction.calculateDistance(star.getPosition(),blackHole.getPosition());
+                int[] dir = new int[2];
+                dir = star_attraction.getDirection(star.getPosition(),blackHole.getPosition());
+                Forces[i] = star_attraction.calculateForce(dir, star_attraction.getDistance(),star.getMass(),blackHole.getMass());
+            }
+            double[][] netForce = new double[numStars][2];
+            netForce[i] = star.calculateNetForce(Forces);
+            double[][] acceleration = new double[numStars][2];
+            acceleration[i] = star.calculateAcceleration(netForce[i]);
+            star.setVelocity(star.calculateVelocity(acceleration[i]));
+             */
+            star.setVelocity(1,1);
+            star.nextPosition();
+
+
+        }}}
 /*
+            // Update positions and velocities of black holes
+        //for (BlackHole blackHole : blackHoles) {
+            //blackHole.setX(blackHole.getX()+iteration);
+            //blackHole.setY(blackHole.getY()+iteration);
+
+
         // Update positions and velocities of stars
         for (Star star : stars) {
             double[] netForce = {0.0, 0.0};
             for (BlackHole blackHole : blackHoles) {
-                double[] attractionForce = calculateForce(blackHole.getPosition(), blackHole.getMass(), star.getMass(), calculateDistance(blackHole.getPosition(), star.getPosition()));
+                double[] attractionForce = calculateForce(blackHole.getPosition(), blackHole.getMass(), star.getMass(),
+                        calculateDistance(blackHole.getPosition(), star.getPosition()));
                 netForce[0] += attractionForce[0];
                 netForce[1] += attractionForce[1];
             }
@@ -184,7 +213,8 @@ public class Main {
             moon.updatePosition();
         }
     }
-*/
+
+
     private static int getInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(prompt);
@@ -192,3 +222,4 @@ public class Main {
     }
 
 }
+*/

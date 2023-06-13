@@ -1,5 +1,3 @@
-import java.util.List;
-
 class Star extends MassObject {
     private int lifeExpectancy;
     private double[] velocity;
@@ -27,7 +25,7 @@ class Star extends MassObject {
         this.velocity = velocity;
     }
 
-    public double[] calculateNetForce(List<double[]> forces) {
+    public double[] calculateNetForce(double[][] forces) {
         double[] netForce = {0.0, 0.0};
         for (double[] force : forces) {
             netForce[0] += force[0];
@@ -47,11 +45,9 @@ class Star extends MassObject {
         return velocity;
     }
 
-    public int[] nextPosition() {
-        int[] position = getPosition();
-        position[0] += velocity[0];
-        position[1] += velocity[1];
-        return position;
+    public void nextPosition() {
+        this.position[0] += velocity[0];
+        this.position[1] += velocity[1];
     }
     /*
     public void checkStarAge(int years) {

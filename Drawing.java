@@ -31,8 +31,7 @@ public class Drawing extends Canvas {
         moons1 = moons;
     };
 
-    public void updateDrawing(){
-        black_hole_color = Color.pink;
+    public void updateDrawing( BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons){
         repaint();
     }
 
