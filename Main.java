@@ -42,7 +42,7 @@ public class Main {
                 e.printStackTrace();
             }
             // Update positions and velocities of objects
-            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons, numBlackHoles, numStars);
+            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons);
         }
     }
 
@@ -142,11 +142,10 @@ public class Main {
         return moons;
     }
 
-    private static void updatePositionsAndVelocities(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons,
-                                                     int numBlackholes, int numStars) {
+    private static void updatePositionsAndVelocities(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
+        /*
         // Update positions and velocities of stars
         for (Star star : stars){
-            /*
             int i = 0;
             double[][] Forces = new double[numBlackholes][2];
             for(BlackHole blackHole : blackHoles){
@@ -161,19 +160,19 @@ public class Main {
             double[][] acceleration = new double[numStars][2];
             acceleration[i] = star.calculateAcceleration(netForce[i]);
             star.setVelocity(star.calculateVelocity(acceleration[i]));
-             */
             star.setVelocity(1,1);
             star.nextPosition();
 
 
         }}}
-/*
+*/
+
             // Update positions and velocities of black holes
-        //for (BlackHole blackHole : blackHoles) {
-            //blackHole.setX(blackHole.getX()+iteration);
-            //blackHole.setY(blackHole.getY()+iteration);
+        for (BlackHole blackHole : blackHoles) {
+            blackHole.setX(blackHole.getX()+iteration);
+            blackHole.setY(blackHole.getY()+iteration);}}}
 
-
+/*
         // Update positions and velocities of stars
         for (Star star : stars) {
             double[] netForce = {0.0, 0.0};

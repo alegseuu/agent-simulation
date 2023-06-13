@@ -46,8 +46,9 @@ class Star extends MassObject {
     }
 
     public void nextPosition() {
-        this.position[0] += velocity[0];
-        this.position[1] += velocity[1];
+        double[] position = new double[0];
+        position[0] += velocity[0];
+        position[1] += velocity[1];
     }
     /*
     public void checkStarAge(int years) {
