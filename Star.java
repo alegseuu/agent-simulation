@@ -1,11 +1,15 @@
 class Star extends MassObject {
     private int lifeExpectancy;
     private double[] velocity;
+    private double[] acceleration;
+    private double[] netForce;
 
     public Star(int mass, int age, int lifeExpectancy, double[] velocity, int[] position, String name) {
         super(mass, age, name, position);
         this.lifeExpectancy = lifeExpectancy;
         this.velocity = velocity;
+        this.acceleration = new double[]{0.0, 0.0};
+        this.netForce = new double[]{0.0, 0.0};
     }
 
 
@@ -25,30 +29,28 @@ class Star extends MassObject {
         this.velocity = velocity;
     }
 
-    public double[] calculateNetForce(double[][] forces) {
-        double[] netForce = {0.0, 0.0};
-        for (double[] force : forces) {
-            netForce[0] += force[0];
-            netForce[1] += force[1];
+    public void calculateNetForce(double[][] forces, int numBHoles) {
+        netForce = new double[]{0.0, 0.0};
+        for(int i = 0; i < numBHoles; i++){
+            netForce[0] += forces[i][0];
+            netForce[1] += forces[i][1];
+            //System.out.println(this.netForce[0]+" "+this.netForce[1]+" "+this.getMass());
         }
-        return netForce;
     }
 
-    public double[] calculateAcceleration(double[] force) {
-        double[] acceleration = {force[0] / getMass(), force[1] / getMass()};
-        return acceleration;
+    public void calculateAcceleration() {
+        this.acceleration[0] = this.netForce[0] / ((double) this.getMass() /100);
+        this.acceleration[1] = this.netForce[1] / ((double) this.getMass() / 100);
     }
 
-    public double[] calculateVelocity(double[] acceleration) {
-        velocity[0] += acceleration[0];
-        velocity[1] += acceleration[1];
-        return velocity;
+    public void calculateVelocity() {
+       this.velocity[0] = this.acceleration[0];
+       this.velocity[1] = this.acceleration[1];
     }
 
     public void nextPosition() {
-        double[] position = new double[0];
-        position[0] += velocity[0];
-        position[1] += velocity[1];
+        this.setX((int) (this.getX()+this.velocity[0]));
+        this.setY((int) (this.getY()+this.velocity[1]));
     }
     /*
     public void checkStarAge(int years) {

@@ -30,7 +30,7 @@ public class Main {
         Planet[] planets = createPlanets(numPlanets);
         Moon[] moons = createMoons(numMoons);
 
-        Canvas canvas = printSimulationState(numIterations, numBlackHoles, numStars, numPlanets,  numMoons, blackHoles, stars, planets, moons);
+        Canvas canvas = printSimulationState(numIterations, numBlackHoles, numStars, numPlanets, numMoons, blackHoles, stars, planets, moons);
 
         // Perform simulation iterations
         for (int i = 1; i <= numIterations; i++) {
@@ -42,13 +42,33 @@ public class Main {
                 e.printStackTrace();
             }
             // Update positions and velocities of objects
-            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons);
+            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons, numBlackHoles);
         }
     }
+
+
+    private static void updatePositionsAndVelocities(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets,
+                                                     Moon[] moons, int numBHoles) {
+        // Update positions and velocities of black holes
+        for (Star star : stars) {
+            double[][] Forces = new double[numBHoles][2];
+            for(int i = 0; i < numBHoles; i++){
+                Forces[i][0] = iteration;
+                Forces[i][1] = iteration;
+                //
+            }
+            star.calculateNetForce(Forces, numBHoles);
+            star.calculateAcceleration();
+            star.calculateVelocity();
+            star.nextPosition();
+        }
+    }
+
 
     private static Drawing printSimulationState(int iteration, int numBH, int numStars, int numPlanets, int numMoons,
                                              BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
         JFrame frame = new JFrame("Kosmos");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Canvas canvas = new Drawing();
         canvas.setSize(1500, 800);
         canvas.setBackground(Color.black);
@@ -59,7 +79,6 @@ public class Main {
         //updateSimulationState((Drawing) canvas);
         return (Drawing) canvas;
     }
-
 
     private static void updateSimulationState(Drawing canvas, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons){
         canvas.updateDrawing(blackHoles, stars, planets, moons);
@@ -142,76 +161,7 @@ public class Main {
         return moons;
     }
 
-    private static void updatePositionsAndVelocities(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
-        /*
-        // Update positions and velocities of stars
-        for (Star star : stars){
-            int i = 0;
-            double[][] Forces = new double[numBlackholes][2];
-            for(BlackHole blackHole : blackHoles){
-                StarAttraction star_attraction = new StarAttraction();
-                star_attraction.calculateDistance(star.getPosition(),blackHole.getPosition());
-                int[] dir = new int[2];
-                dir = star_attraction.getDirection(star.getPosition(),blackHole.getPosition());
-                Forces[i] = star_attraction.calculateForce(dir, star_attraction.getDistance(),star.getMass(),blackHole.getMass());
-            }
-            double[][] netForce = new double[numStars][2];
-            netForce[i] = star.calculateNetForce(Forces);
-            double[][] acceleration = new double[numStars][2];
-            acceleration[i] = star.calculateAcceleration(netForce[i]);
-            star.setVelocity(star.calculateVelocity(acceleration[i]));
-            star.setVelocity(1,1);
-            star.nextPosition();
 
-
-        }}}
-*/
-
-            // Update positions and velocities of black holes
-        for (BlackHole blackHole : blackHoles) {
-            blackHole.setX(blackHole.getX()+iteration);
-            blackHole.setY(blackHole.getY()+iteration);}}}
-
-/*
-        // Update positions and velocities of stars
-        for (Star star : stars) {
-            double[] netForce = {0.0, 0.0};
-            for (BlackHole blackHole : blackHoles) {
-                double[] attractionForce = calculateForce(blackHole.getPosition(), blackHole.getMass(), star.getMass(),
-                        calculateDistance(blackHole.getPosition(), star.getPosition()));
-                netForce[0] += attractionForce[0];
-                netForce[1] += attractionForce[1];
-            }
-            star.setVelocity(calculateVelocity(netForce));
-            star.setPosition(star.nextPosition());
-        }
-
-        // Update positions and velocities of planets
-        for (Planet planet : planets) {
-            double[] force = {0.0, 0.0};
-            for (Star star : stars) {
-                double[] attractionForce = planet.calculateForce(star.getPosition(), star.getMass(), planet.getMass(), planet.getDistance());
-                force[0] += attractionForce[0];
-                force[1] += attractionForce[1];
-            }
-            planet.setForce(force);
-            planet.updateVelocity();
-            planet.updatePosition();
-        }
-
-        // Update positions and velocities of moons
-        for (Moon moon : moons) {
-            double[] force = {0.0, 0.0};
-            for (Planet planet : planets) {
-                double[] attractionForce = moon.calculateForce(planet.getPosition(), planet.getMass(), moon.getMass(), moon.getDistance());
-                force[0] += attractionForce[0];
-                force[1] += attractionForce[1];
-            }
-            moon.setForce(force);
-            moon.updateVelocity();
-            moon.updatePosition();
-        }
-    }
 
 
     private static int getInput(String prompt) {
@@ -221,4 +171,3 @@ public class Main {
     }
 
 }
-*/
