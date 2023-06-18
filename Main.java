@@ -9,6 +9,18 @@ import java.awt.*;
 import java.util.List;
 
 public class Main {
+    //simulation parameters
+    private static final int maxX = 1500; //wywalam w jedno miejsce
+    private static final int maxY = 800;
+    private static final int maxBHMass = 100;
+    private static final int maxBHAge = 100;
+    private static final int maxStarMass = 100;
+    private static final int maxStarAge = 100;
+    private static final int maxLifeExpectancy = 1000;
+    private static final int maxPlanetMass = 100;
+    private static final int maxPlanetAge = 100;
+    private static final int maxMoonMass = 100;
+    private static final int maxMoonAge = 100;
     public static void main(String[] args) {
         /*
         // Get input from the user
@@ -22,7 +34,8 @@ public class Main {
         int numStars = 10;
         int numPlanets = 10;
         int numMoons = 10;
-        int numIterations = 20;
+        int numIterations = 10000;
+        long sleep_time = 100;
 
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
@@ -37,7 +50,7 @@ public class Main {
             // Print the current state of the simulation
             updateSimulationState((Drawing) canvas, blackHoles, stars, planets, moons);
             try {
-                Thread.sleep(1000); // Add a delay between iterations for visualization
+                Thread.sleep(sleep_time); // Add a delay between iterations for visualization
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -54,6 +67,7 @@ public class Main {
             StarAttraction star_attract = new StarAttraction();
             double[][] Forces = new double[numBHoles][2];
             for(int i = 0; i < numBHoles; i++){
+                star_attract.calculateDistance(star,blackHoles[i]);
                 star_attract.getDirection(star,blackHoles[i]);
                 Forces[i][0] = star_attract.calculateForceX(star.getMass(), blackHoles[i].getMass());
                 Forces[i][1] = star_attract.calculateForceY(star.getMass(), blackHoles[i].getMass());
@@ -85,19 +99,6 @@ public class Main {
     private static void updateSimulationState(Drawing canvas, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons){
         canvas.updateDrawing(blackHoles, stars, planets, moons);
     }
-
-        //simulation parameters
-    private static final int maxX = 1500; //wywalam w jedno miejsce
-    private static final int maxY = 800;
-    private static final int maxBHMass = 100;
-    private static final int maxBHAge = 100;
-    private static final int maxStarMass = 100;
-    private static final int maxStarAge = 100;
-    private static final int maxLifeExpectancy = 1000;
-    private static final int maxPlanetMass = 100;
-    private static final int maxPlanetAge = 100;
-    private static final int maxMoonMass = 100;
-    private static final int maxMoonAge = 100;
 
     private static BlackHole[] createBlackHoles(int numBlackHoles) {
         BlackHole[] blackHoles = new BlackHole[numBlackHoles];
