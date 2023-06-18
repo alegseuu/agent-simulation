@@ -13,7 +13,7 @@ public class Main {
     private static final int maxX = 1500; //wywalam w jedno miejsce
     private static final int maxY = 800;
     private static final int maxBHMass = 100;
-    private static final int maxBHAge = 100;
+    private static final int maxBHAge = 1000;
     private static final int maxStarMass = 100;
     private static final int maxStarAge = 100;
     private static final int maxLifeExpectancy = 1000;
@@ -30,12 +30,12 @@ public class Main {
         int numMoons = getInput("Enter the number of Moons: ");
         int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
         */
-        int numBlackHoles = 10;
-        int numStars = 10;
-        int numPlanets = 10;
-        int numMoons = 10;
-        int numIterations = 10000;
-        long sleep_time = 100;
+        int numBlackHoles = 2;
+        int numStars = 1;
+        int numPlanets = 0;
+        int numMoons = 0;
+        int numIterations = 10;
+        long sleep_time = 2000;
 
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
@@ -65,18 +65,20 @@ public class Main {
         // Update positions and velocities of black holes
         for (Star star : stars) {
             StarAttraction star_attract = new StarAttraction();
+            double[] direction = new double[2];
             double[][] Forces = new double[numBHoles][2];
             for(int i = 0; i < numBHoles; i++){
                 star_attract.calculateDistance(star,blackHoles[i]);
-                star_attract.getDirection(star,blackHoles[i]);
-                Forces[i][0] = star_attract.calculateForceX(star.getMass(), blackHoles[i].getMass());
-                Forces[i][1] = star_attract.calculateForceY(star.getMass(), blackHoles[i].getMass());
+                direction = star_attract.getDirection(star,blackHoles[i]);
+                star_attract.calculateForce(star.getMass(), blackHoles[i].getMass());
+                Forces[i][0] = star_attract.calculateForceX();
+                Forces[i][1] = star_attract.calculateForceY();
                 //
             }
             star.calculateNetForce(Forces, numBHoles);
             star.calculateAcceleration();
             star.calculateVelocity();
-            star.nextPosition();
+            star.nextPosition(direction);
         }
     }
 

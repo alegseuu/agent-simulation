@@ -49,9 +49,9 @@ class Star extends MassObject {
         //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
     }
 
-    public void nextPosition() {
-        this.setX((int) (this.getX()+this.velocity[0]));
-        this.setY((int) (this.getY()+this.velocity[1]));
+    public void nextPosition(double[] direction) {
+        this.setX((int) (this.getX()+(this.velocity[0])) * (int)direction[0]);
+        this.setY((int) (this.getY()+this.velocity[1])* (int)direction[1]);
         //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
     }
     /*

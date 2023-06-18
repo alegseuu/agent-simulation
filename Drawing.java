@@ -47,9 +47,9 @@ public class Drawing extends Canvas {
         //stars printing
         g.setColor(star_color);
         for (int i = 0; i < stars_number; i++){
-            g.fillOval(stars1[i].getX(), stars1[i].getY(), star_size, star_size);
+            g.fillOval(stars1[i].getX(), stars1[i].getY(), (int) star_size*stars1[i].getMass()/100, (int) star_size*stars1[i].getMass()/100);
         }
-
+/*
         //planet printing
         g.setColor(planet_color);
         for (int i = 0; i < planets_number; i++){
@@ -61,5 +61,7 @@ public class Drawing extends Canvas {
         for (int i = 0; i < moon_size; i++){
             g.fillOval(moons1[i].getX(), moons1[i].getY(), moon_size, moon_size);
         }
+
+ */
     }
 }
