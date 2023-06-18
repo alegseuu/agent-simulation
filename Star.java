@@ -39,18 +39,20 @@ class Star extends MassObject {
     }
 
     public void calculateAcceleration() {
-        this.acceleration[0] = this.netForce[0] / ((double) this.getMass() /100);
-        this.acceleration[1] = this.netForce[1] / ((double) this.getMass() / 100);
+        this.acceleration[0] = this.netForce[0] / ((double) this.getMass() /10);
+        this.acceleration[1] = this.netForce[1] / ((double) this.getMass() / 10);
     }
 
     public void calculateVelocity() {
        this.velocity[0] = this.acceleration[0];
        this.velocity[1] = this.acceleration[1];
+        //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
     }
 
     public void nextPosition() {
         this.setX((int) (this.getX()+this.velocity[0]));
         this.setY((int) (this.getY()+this.velocity[1]));
+        //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
     }
     /*
     public void checkStarAge(int years) {

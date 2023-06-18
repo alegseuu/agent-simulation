@@ -51,10 +51,12 @@ public class Main {
                                                      Moon[] moons, int numBHoles) {
         // Update positions and velocities of black holes
         for (Star star : stars) {
+            StarAttraction star_attract = new StarAttraction();
             double[][] Forces = new double[numBHoles][2];
             for(int i = 0; i < numBHoles; i++){
-                Forces[i][0] = iteration;
-                Forces[i][1] = iteration;
+                star_attract.getDirection(star,blackHoles[i]);
+                Forces[i][0] = star_attract.calculateForceX(star.getMass(), blackHoles[i].getMass());
+                Forces[i][1] = star_attract.calculateForceY(star.getMass(), blackHoles[i].getMass());
                 //
             }
             star.calculateNetForce(Forces, numBHoles);

@@ -2,11 +2,15 @@ class StarAttraction {
     private double distance;
     private double[] gravitationalForce;
     private double centrifugalForce;
+    private double[] force; //array of forces from every black hole for every star
+    private double[] direction;
 
     public StarAttraction() {
         this.distance = 0.0;
         this.gravitationalForce = new double[]{0.0, 0.0};
         this.centrifugalForce = 0.0;
+        this.force = new double[]{0.0, 0.0};
+        this.direction = new double[]{0.0, 0.0};
     }
 
     public double calculateDistance(int[] position1, int[] position2) {
@@ -21,24 +25,32 @@ class StarAttraction {
 
     public double getDistance(){return distance;};
 
-    public int[] getDirection(int[] position_star, int[] position_blackhole){
+    public int[] getDirection(Star star, BlackHole blackHole){
         int[] direction = new int[2];
-        if(position_star[0]!=position_blackhole[0]){
-            direction[0] = (position_blackhole[0]-position_star[0])/Math.abs(position_blackhole[0]-position_star[0]);
+        if(star.getX() != blackHole.getX()){
+            direction[0] = (blackHole.getX()-star.getX())/Math.abs(blackHole.getX()-star.getX());
         }
-        else {direction[0] = 0;}
-        if(position_star[1]!=position_blackhole[1]){
-            direction[1] = (position_blackhole[1]-position_star[1])/Math.abs(position_blackhole[1]-position_star[1]);
+        else {direction[0] = 0;
+            System.out.println(this.direction[0]);}
+        if(star.getY() != blackHole.getY()){
+            direction[1] = (blackHole.getY()-star.getY())/Math.abs(blackHole.getY()-star.getY());
         }
-        else {direction[1] = 0;}
+        else {direction[1] = 0;
+            System.out.println(this.direction[1]+" ");}
+        //System.out.println(this.direction[0]+" "+this.direction[1]+" ");
         return direction;
     }
 
-    public double[] calculateForce(int[] direction, double distance, double mass1, double mass2) {
-        double gravitationalConstant = 6.67430e-11;
-        double force = (gravitationalConstant * mass1 * mass2) / (distance * distance);
-        double[] forceVector = {force * direction[0], force * direction[1]};
-        return forceVector;
+    public double calculateForceX( /*, double distance,*/ double mass1, double mass2) {
+        //double gravitationalConstant = 6.67430e-11;
+        //double force = (gravitationalConstant * mass1 * mass2) / (distance * distance);
+        //double[] forceVector = {force * direction[0], force * direction[1]};
+        this.force[0] = mass1 * mass2 /100;
+        return this.force[0];
+    }
+    public double calculateForceY(double mass1, double mass2){
+        this.force[1] = mass1 * mass2 /100;
+        return this.force[1];
     }
 
     public double getForce(double[] forceVector) {
