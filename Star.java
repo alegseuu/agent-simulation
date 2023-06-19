@@ -34,7 +34,7 @@ class Star extends MassObject {
         for(int i = 0; i < numBHoles; i++){
             netForce[0] += forces[i][0];
             netForce[1] += forces[i][1];
-            //System.out.println(this.netForce[0]+" "+this.netForce[1]+" "+this.getMass());
+            System.out.println(this.netForce[0]+" "+this.netForce[1]+" "+this.getMass());
         }
     }
 
@@ -46,13 +46,15 @@ class Star extends MassObject {
     public void calculateVelocity() {
        this.velocity[0] = this.acceleration[0];
        this.velocity[1] = this.acceleration[1];
-        //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
+        System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
     }
 
     public void nextPosition(double[] direction) {
-        this.setX((int) (this.getX()+(this.velocity[0])) * (int)direction[0]);
-        this.setY((int) (this.getY()+this.velocity[1])* (int)direction[1]);
+        //System.out.println(this.getX()+" "+this.getY());
+        this.setX((int) (this.getX()+((this.velocity[0]) * (int)direction[0])));
+        this.setY((int) (this.getY()+(this.velocity[1]* (int)direction[1])));
         //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
+        System.out.println(this.getX()+" "+this.getY());
     }
     /*
     public void checkStarAge(int years) {

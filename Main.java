@@ -34,8 +34,8 @@ public class Main {
         int numStars = 1;
         int numPlanets = 0;
         int numMoons = 0;
-        int numIterations = 10;
-        long sleep_time = 2000;
+        int numIterations = 10000;
+        long sleep_time = 10;
 
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);

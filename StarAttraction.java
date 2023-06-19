@@ -23,7 +23,7 @@ class StarAttraction {
         this.dx = Math.abs(star.getX()-BH.getX());
         this.dy = Math.abs(star.getY()-BH.getY());
         this.distance = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
-        System.out.println(this.distance);
+        //System.out.println(this.distance);
     }
 
 
