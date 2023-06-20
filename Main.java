@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Main {
     //simulation parameters
-    private static final int maxX = 1500; //wywalam w jedno miejsce
+    private static final int maxX = 800; //wywalam w jedno miejsce
     private static final int maxY = 800;
     private static final int maxBHMass = 100;
     private static final int maxBHAge = 1000;
@@ -30,8 +30,8 @@ public class Main {
         int numMoons = getInput("Enter the number of Moons: ");
         int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
         */
-        int numBlackHoles = 2;
-        int numStars = 1;
+        int numBlackHoles = 5;
+        int numStars = 5;
         int numPlanets = 0;
         int numMoons = 0;
         int numIterations = 10000;
@@ -107,7 +107,7 @@ public class Main {
         Random random = new Random();
 
         for (int i = 0; i < numBlackHoles; i++) {
-            int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
+            double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             int mass = random.nextInt(maxBHMass);
             int age = random.nextInt(maxBHAge);
             String name = "black_hole1" + Integer.toString(i);
@@ -126,7 +126,7 @@ public class Main {
             int age = random.nextInt(maxStarAge);
             int lifeExpectancy = random.nextInt(maxLifeExpectancy);
             double[] velocity = {0.0, 0.0};
-            int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
+            double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             String name = "Star" + Integer.toString(i);
             stars[i] = new Star(mass, age, lifeExpectancy, velocity, position, name);
         }
@@ -143,7 +143,7 @@ public class Main {
             int age = random.nextInt(maxPlanetAge);
             String name = "Planet" + Integer.toString(i);
             double[] velocity = {0.0, 0.0};
-            int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
+            double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             planets[i] = new Planet(mass, age, name, velocity, position);
         }
 
@@ -159,7 +159,7 @@ public class Main {
             int age = random.nextInt(maxMoonAge);
             String name = "Moon" + Integer.toString(i);
             double[] velocity = {0.0, 0.0};
-            int[] position = {random.nextInt(maxX), random.nextInt(maxY)};
+            double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             moons[i] = new Moon(mass, age, name, velocity, position);
         }
 

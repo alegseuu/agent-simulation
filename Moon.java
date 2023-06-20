@@ -3,7 +3,7 @@ import java.util.List;
 class Moon extends MassObject {
     private double[] velocity;
 
-    public Moon(int mass, int age, String name, double[] velocity, int[] position) {
+    public Moon(int mass, int age, String name, double[] velocity, double[] position) {
         super(mass, age, name, position);
         this.velocity = velocity;
     }
@@ -36,8 +36,8 @@ class Moon extends MassObject {
         return velocity;
     }
 
-    public int[] nextPosition() {
-        int[] position = getPosition();
+    public double[] nextPosition() {
+        double[] position = getPosition();
         position[0] += velocity[0];
         position[1] += velocity[1];
         return position;

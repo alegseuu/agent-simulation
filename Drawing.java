@@ -40,14 +40,14 @@ public class Drawing extends Canvas {
         //black holes printing
         g.setColor(black_hole_color);
         for (int i = 0; i < black_holes_number; i++){
-            g.fillOval(blackHoles1[i].getX(), blackHoles1[i].getY(),
+            g.fillOval((int)blackHoles1[i].getX(), (int)blackHoles1[i].getY(),
                     (int) black_hole_size*blackHoles1[i].getMass()/100, (int) black_hole_size*blackHoles1[i].getMass()/100);
         }
 
         //stars printing
         g.setColor(star_color);
         for (int i = 0; i < stars_number; i++){
-            g.fillOval(stars1[i].getX(), stars1[i].getY(), (int) star_size*stars1[i].getMass()/100, (int) star_size*stars1[i].getMass()/100);
+            g.fillOval((int)stars1[i].getX(), (int)stars1[i].getY(), (int) star_size*stars1[i].getMass()/100, (int) star_size*stars1[i].getMass()/100);
         }
 /*
         //planet printing

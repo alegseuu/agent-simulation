@@ -8,7 +8,7 @@ class StarAttraction {
     private double[] forceXY; //array of forces from every black hole for every star
     private double[] direction;
     //final double gravitationalConstant = 6.67430e-11;
-    final double gravitationalConstant = 6.67430;
+    final double gravitationalConstant = 66.7430;
 
     public StarAttraction() {
         this.distance = 0.0;
@@ -49,7 +49,7 @@ class StarAttraction {
         }
         else {this.direction[1] = 0;
             }
-        System.out.println(this.direction[0]+" "+this.direction[1]+" ");
+        //System.out.println(this.direction[0]+" "+this.direction[1]+" ");
         return this.direction;
     }
 
@@ -57,16 +57,16 @@ class StarAttraction {
         //double force = (gravitationalConstant * mass1 * mass2) / (distance * distance);
         //double[] forceVector = {force * direction[0], force * direction[1]};
         this.Force = gravitationalConstant * mass1 * mass2 /(this.distance * this.distance);
-        System.out.println(this.Force);
+        //System.out.println(this.Force);
     }
     public double calculateForceX() {
         this.forceXY[0] = this.Force * this.dx / this.distance; //sin
-        System.out.println(this.forceXY[0]);
+        //System.out.println(this.forceXY[0]);
         return this.forceXY[0];
     }
     public double calculateForceY(){
         this.forceXY[1] = this.Force * this.dy / this.distance; //cos
-        System.out.println(this.forceXY[1]);
+        //System.out.println(this.forceXY[1]);
         return this.forceXY[1];
     }
 

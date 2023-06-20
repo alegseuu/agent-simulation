@@ -4,7 +4,7 @@ class Star extends MassObject {
     private double[] acceleration;
     private double[] netForce;
 
-    public Star(int mass, int age, int lifeExpectancy, double[] velocity, int[] position, String name) {
+    public Star(int mass, int age, int lifeExpectancy, double[] velocity, double[] position, String name) {
         super(mass, age, name, position);
         this.lifeExpectancy = lifeExpectancy;
         this.velocity = velocity;
@@ -50,10 +50,17 @@ class Star extends MassObject {
     }
 
     public void nextPosition(double[] direction) {
-        //System.out.println(this.getX()+" "+this.getY());
-        this.setX((int) (this.getX()+((this.velocity[0]) * (int)direction[0])));
-        this.setY((int) (this.getY()+(this.velocity[1]* (int)direction[1])));
-        //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
+        System.out.println(this.getX()+" "+this.getY());
+        System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName()+" "+direction[0]+" "+direction[1]);
+        System.out.println((int)direction[0]);
+        double x = this.velocity[0] * (int)direction[0];
+        System.out.println(x);
+        double y = this.getX() + x;
+        System.out.println(y);
+        int z = (int) y;
+        System.out.println(z);
+        this.setX( (this.getX()+((this.velocity[0]) * direction[0])));
+        this.setY( (this.getY()+(this.velocity[1]* direction[1])));
         System.out.println(this.getX()+" "+this.getY());
     }
     /*
