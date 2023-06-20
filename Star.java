@@ -43,9 +43,9 @@ class Star extends MassObject {
         this.acceleration[1] = this.netForce[1] / ((double) this.getMass() / 10);
     }
 
-    public void calculateVelocity() {
-       this.velocity[0] = this.acceleration[0];
-       this.velocity[1] = this.acceleration[1];
+    public void calculateVelocity(StarAttraction starat) {
+       this.velocity[0] = Math.sqrt(this.acceleration[0] * starat.dx);
+       this.velocity[1] = Math.sqrt(this.acceleration[1] * starat.dy);
         System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
     }
 

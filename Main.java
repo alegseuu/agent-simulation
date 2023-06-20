@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Main {
     //simulation parameters
-    private static final int maxX = 800; //wywalam w jedno miejsce
+    private static final int maxX = 1500; //wywalam w jedno miejsce
     private static final int maxY = 800;
     private static final int maxBHMass = 100;
     private static final int maxBHAge = 1000;
@@ -31,7 +31,7 @@ public class Main {
         int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
         */
         int numBlackHoles = 5;
-        int numStars = 5;
+        int numStars = 20;
         int numPlanets = 0;
         int numMoons = 0;
         int numIterations = 10000;
@@ -77,7 +77,7 @@ public class Main {
             }
             star.calculateNetForce(Forces, numBHoles);
             star.calculateAcceleration();
-            star.calculateVelocity();
+            star.calculateVelocity(star_attract);
             star.nextPosition(direction);
         }
     }
@@ -162,7 +162,6 @@ public class Main {
             double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             moons[i] = new Moon(mass, age, name, velocity, position);
         }
-
         return moons;
     }
 
