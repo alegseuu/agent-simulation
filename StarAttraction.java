@@ -7,8 +7,8 @@ class StarAttraction {
     private double Force;
     private double[] forceXY; //array of forces from every black hole for every star
     private double[] direction;
-    final double gravitationalConstant = 6.67430e-3;
-    //final double gravitationalConstant = 6.67430;
+    //final double gravitationalConstant = 6.67430e-11;
+    final double gravitationalConstant = 6.67430;
 
     public StarAttraction() {
         this.distance = 0.0;

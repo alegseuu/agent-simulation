@@ -34,10 +34,10 @@ public class Main {
         int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
         */
         int numBlackHoles = 4;
-        int numStars = 5;
+        int numStars = 10;
         int numPlanets = 0;
         int numMoons = 0;
-        int numIterations = 100000;
+        int numIterations = 10000;
         long sleep_time = 10;
 
         // Create the objects
@@ -114,7 +114,7 @@ public class Main {
             int mass = random.nextInt(maxBHMass);
             int age = random.nextInt(maxBHAge);
             String name = "black_hole1" + Integer.toString(i);
-            blackHoles[i] = new BlackHole(mass, age, name, position, maxBHMass);
+            blackHoles[i] = new BlackHole(mass, age, name, position);
         }
 
         return blackHoles;
@@ -131,7 +131,7 @@ public class Main {
             double[] velocity = {0.0, 0.0};
             double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             String name = "Star" + Integer.toString(i);
-            stars[i] = new Star(mass, age, lifeExpectancy, velocity, position, name, starMinDistance, maxStarMass);
+            stars[i] = new Star(mass, age, lifeExpectancy, velocity, position, name, starMinDistance);
         }
 
         return stars;

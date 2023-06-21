@@ -6,8 +6,8 @@ public class Drawing extends Canvas {
     static Star[] stars1;
     static Planet[] planets1;
     static Moon[] moons1;
-    static int black_hole_size = 1;
-    static int star_size = 1;
+    static int black_hole_size = 20;
+    static int star_size = 10;
     static int planet_size = 5;
     static int moon_size = 3;
     static Color black_hole_color = Color.DARK_GRAY;
@@ -41,14 +41,13 @@ public class Drawing extends Canvas {
         g.setColor(black_hole_color);
         for (int i = 0; i < black_holes_number; i++){
             g.fillOval((int)blackHoles1[i].getX(), (int)blackHoles1[i].getY(),
-                    (int) (black_hole_size*blackHoles1[i].radius), (int) (black_hole_size*blackHoles1[i].radius));
+                    (int) black_hole_size*blackHoles1[i].getMass()/100, (int) black_hole_size*blackHoles1[i].getMass()/100);
         }
 
         //stars printing
         g.setColor(star_color);
         for (int i = 0; i < stars_number; i++){
-            g.fillOval((int)stars1[i].getX(), (int)stars1[i].getY(),
-                    (int) (star_size*stars1[i].radius), (int) (star_size*stars1[i].radius));
+            g.fillOval((int)stars1[i].getX(), (int)stars1[i].getY(), (int) star_size*stars1[i].getMass()/100, (int) star_size*stars1[i].getMass()/100);
         }
 /*
         //planet printing
