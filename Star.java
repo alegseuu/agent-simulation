@@ -1,18 +1,14 @@
 class Star extends MassObject {
     private int lifeExpectancy;
     private double[] velocity;
-    private double[] acceleration;
-    private double[] netForce;
-    private double minDistance;
 
-    public Star(int mass, int age, int lifeExpectancy, double[] velocity, double[] position, String name, int minDistance) {
+    public Star(int mass, int age, int lifeExpectancy, double[] velocity, int[] position, String name) {
         super(mass, age, name, position);
         this.lifeExpectancy = lifeExpectancy;
         this.velocity = velocity;
-        this.acceleration = new double[]{0.0, 0.0};
-        this.netForce = new double[]{0.0, 0.0};
-        this.minDistance = (double) minDistance;
     }
+
+
 
     public int getLifeExpectancy() {return lifeExpectancy;
     }
@@ -29,55 +25,30 @@ class Star extends MassObject {
         this.velocity = velocity;
     }
 
-    public void calculateNetForce(double[][] forces, int numBHoles) {
-        netForce = new double[]{0.0, 0.0};
-        for(int i = 0; i < numBHoles; i++){
-            netForce[0] += forces[i][0];
-            netForce[1] += forces[i][1];
-            //System.out.println(this.netForce[0]+" "+this.netForce[1]);
+    public double[] calculateNetForce(double[][] forces) {
+        double[] netForce = {0.0, 0.0};
+        for (double[] force : forces) {
+            netForce[0] += force[0];
+            netForce[1] += force[1];
         }
+        return netForce;
     }
 
-    public void calculateAcceleration() {
-        this.acceleration[0] = this.netForce[0] / ((double) this.getMass() /10);
-        this.acceleration[1] = this.netForce[1] / ((double) this.getMass() / 10);
-        //System.out.println(this.acceleration[0]+" "+this.acceleration[1]);
+    public double[] calculateAcceleration(double[] force) {
+        double[] acceleration = {force[0] / getMass(), force[1] / getMass()};
+        return acceleration;
     }
 
-    public void calculateVelocity(StarAttraction starat) {
-       this.velocity[0] =Math.sqrt(this.acceleration[0] * starat.dx / 100);
-       this.velocity[1] = Math.sqrt(this.acceleration[1] * starat.dy /100);
-        //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
+    public double[] calculateVelocity(double[] acceleration) {
+        velocity[0] += acceleration[0];
+        velocity[1] += acceleration[1];
+        return velocity;
     }
 
-    public void nextPosition(double[] direction, StarAttraction starat, BlackHole[] blackHoles, int numBH) {
-        //System.out.println(this.getX()+" "+this.getY());
-        //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName()+" "+direction[0]+" "+direction[1]);
-        //System.out.println((int)direction[0]);
-        //double x = this.velocity[0] * (int)direction[0];
-        //System.out.println(x);
-        //double y = this.getX() + x;
-        //System.out.println(y);
-        //int z = (int) y;
-        //System.out.println(z);
-        double x = this.getX(); //aktualna pozycja
-        double y = this.getY();
-        double next_x = this.getX()+((this.velocity[0]) * direction[0]); // następny x, zanim ustawimy go jako set x/y
-        // trzeba sprawdzić czy ta następna pozycja nie jest za blisko obiektu
-        double next_y = this.getY()+(this.velocity[1]* direction[1]);
-        double dis;
-        boolean dist_check = false;
-        for(int i = 0; i < numBH; i++){
-            dis = starat.checkDistance(this, blackHoles[i]);
-            if(dis <= minDistance){ dist_check = true; }
-        }
-        if(!dist_check){
-            this.setX( (this.getX()+((this.velocity[0]) * direction[0])));
-            this.setY( (this.getY()+(this.velocity[1]* direction[1])));
-        }
-        else{
-        }
-        System.out.println(this.getX()+" "+this.getY());
+    public void nextPosition() {
+        double[] position = new double[0];
+        position[0] += velocity[0];
+        position[1] += velocity[1];
     }
     /*
     public void checkStarAge(int years) {
