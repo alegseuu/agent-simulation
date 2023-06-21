@@ -32,11 +32,6 @@ class StarAttraction {
         return Math.sqrt(this.dx * this.dx + this.dy * this.dy);
     }
 
-
-    //public double getDistance(double[] vector) {
-    //    return Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
-    //}
-
     public double getDistance(){return distance;};
 
     public double[] getDirection(Star star, BlackHole blackHole){

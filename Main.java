@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Main {
     //simulation parameters
-    private static final int maxX = 1500; //wywalam w jedno miejsce
+    private static final int maxX = 1500;
     private static final int maxY = 800;
     private static final int maxBHMass = 100;
     private static final int maxBHAge = 1000;
@@ -22,6 +22,8 @@ public class Main {
     private static final int maxMoonMass = 100;
     private static final int maxMoonAge = 100;
     private static final int starMinDistance = 10;
+    private static final int planetMinDistance = 10;
+    private static final int moonMinDistance = 10;
 
 
     public static void main(String[] args) {
@@ -33,10 +35,10 @@ public class Main {
         int numMoons = getInput("Enter the number of Moons: ");
         int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
         */
-        int numBlackHoles = 4;
+        int numBlackHoles = 10;
         int numStars = 10;
-        int numPlanets = 0;
-        int numMoons = 0;
+        int numPlanets = 10;
+        int numMoons = 10;
         int numIterations = 10000;
         long sleep_time = 10;
 
@@ -58,14 +60,51 @@ public class Main {
                 e.printStackTrace();
             }
             // Update positions and velocities of objects
-            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons, numBlackHoles);
+            updatePositionsAndVelocities(i, blackHoles, stars, planets, moons, numBlackHoles, numStars, numPlanets);
         }
     }
 
 
     private static void updatePositionsAndVelocities(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets,
-                                                     Moon[] moons, int numBHoles) {
-        // Update positions and velocities of black holes
+                                                     Moon[] moons, int numBHoles, int numStars, int numPlanets) {
+        // Update positions and velocities of moons
+        for(Moon moon : moons){
+            MoonAttraction moon_attract = new MoonAttraction();
+            double[] direction = new double[2];
+            double[][] Forces = new double[numPlanets][2];
+            for(int i = 0; i < numPlanets; i++){
+                moon_attract.calculateDistance(moon, planets[i]);
+                direction = moon_attract.getDirection(moon, planets[i]);
+                moon_attract.calculateForce(moon.getMass(),planets[i].getMass());
+                Forces[i][0] = moon_attract.calculateForceX();
+                Forces[i][1] = moon_attract.calculateForceY();
+            }
+            moon.calculateNetForce(Forces, numPlanets);
+            moon.calculateAcceleration();
+            moon.calculateVelocity(moon_attract);
+            moon.nextPosition(direction, moon_attract, planets, numPlanets);
+        }
+
+
+        // Update positions and velocities of planets
+        for(Planet planet : planets){
+            PlanetAttraction planet_attract = new PlanetAttraction();
+            double[] direction = new double[2];
+            double[][] Forces = new double[numStars][2];
+            for(int i = 0; i < numStars; i++){
+                planet_attract.calculateDistance(planet, stars[i]);
+                direction = planet_attract.getDirection(planet, stars[i]);
+                planet_attract.calculateForce(planet.getMass(), stars[i].getMass());
+                Forces[i][0] = planet_attract.calculateForceX();
+                Forces[i][1] = planet_attract.calculateForceY();
+            }
+            planet.calculateNetForce(Forces, numStars);
+            planet.calculateAcceleration();
+            planet.calculateVelocity(planet_attract);
+            planet.nextPosition(direction, planet_attract, stars, numStars);
+        }
+
+        // Update positions and velocities of stars
         for (Star star : stars) {
             StarAttraction star_attract = new StarAttraction();
             double[] direction = new double[2];
@@ -76,7 +115,6 @@ public class Main {
                 star_attract.calculateForce(star.getMass(), blackHoles[i].getMass());
                 Forces[i][0] = star_attract.calculateForceX();
                 Forces[i][1] = star_attract.calculateForceY();
-                //
             }
             star.calculateNetForce(Forces, numBHoles);
             star.calculateAcceleration();
@@ -147,7 +185,7 @@ public class Main {
             String name = "Planet" + Integer.toString(i);
             double[] velocity = {0.0, 0.0};
             double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
-            planets[i] = new Planet(mass, age, name, velocity, position);
+            planets[i] = new Planet(mass, age, name, velocity, position, planetMinDistance);
         }
 
         return planets;
@@ -163,7 +201,7 @@ public class Main {
             String name = "Moon" + Integer.toString(i);
             double[] velocity = {0.0, 0.0};
             double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
-            moons[i] = new Moon(mass, age, name, velocity, position);
+            moons[i] = new Moon(mass, age, name, velocity, position, moonMinDistance);
         }
         return moons;
     }
