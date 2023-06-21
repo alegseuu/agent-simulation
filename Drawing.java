@@ -6,10 +6,10 @@ public class Drawing extends Canvas {
     static Star[] stars1;
     static Planet[] planets1;
     static Moon[] moons1;
-    static int black_hole_size = 20;
-    static int star_size = 10;
-    static int planet_size = 5;
-    static int moon_size = 3;
+    static int black_hole_size = 100;
+    static int star_size = 40;
+    static int planet_size = 20;
+    static int moon_size = 10;
     static Color black_hole_color = Color.DARK_GRAY;
     static Color star_color = Color.magenta;
     static Color planet_color = Color.blue;
@@ -49,19 +49,17 @@ public class Drawing extends Canvas {
         for (int i = 0; i < stars_number; i++){
             g.fillOval((int)stars1[i].getX(), (int)stars1[i].getY(), (int) star_size*stars1[i].getMass()/100, (int) star_size*stars1[i].getMass()/100);
         }
-/*
+
         //planet printing
         g.setColor(planet_color);
         for (int i = 0; i < planets_number; i++){
-            g.fillOval(planets1[i].getX(), planets1[i].getY(), planet_size, planet_size);
+            g.fillOval((int)(planets1[i].getX()), (int)(planets1[i].getY()), (int) planet_size*stars1[i].getMass()/100, (int) planet_size*stars1[i].getMass()/100);
         }
-
         //moon printing
         g.setColor(moon_color);
         for (int i = 0; i < moon_size; i++){
-            g.fillOval(moons1[i].getX(), moons1[i].getY(), moon_size, moon_size);
+            g.fillOval((int)moons1[i].getX(), (int)moons1[i].getY(), (int) moon_size*stars1[i].getMass()/100, moon_size*stars1[i].getMass()/100);
         }
 
- */
     }
 }

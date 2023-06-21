@@ -3,7 +3,7 @@ class Star extends MassObject {
     private double[] velocity;
     private double[] acceleration;
     private double[] netForce;
-    private double minDistance = 10;
+    private double minDistance;
 
     public Star(int mass, int age, int lifeExpectancy, double[] velocity, double[] position, String name, int minDistance) {
         super(mass, age, name, position);
@@ -34,20 +34,32 @@ class Star extends MassObject {
         for(int i = 0; i < numBHoles; i++){
             netForce[0] += forces[i][0];
             netForce[1] += forces[i][1];
+            //System.out.println(this.netForce[0]+" "+this.netForce[1]);
         }
     }
 
     public void calculateAcceleration() {
         this.acceleration[0] = this.netForce[0] / ((double) this.getMass() /10);
         this.acceleration[1] = this.netForce[1] / ((double) this.getMass() / 10);
+        //System.out.println(this.acceleration[0]+" "+this.acceleration[1]);
     }
 
     public void calculateVelocity(StarAttraction starat) {
        this.velocity[0] =Math.sqrt(this.acceleration[0] * starat.dx / 100);
        this.velocity[1] = Math.sqrt(this.acceleration[1] * starat.dy /100);
+        //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName());
     }
 
     public void nextPosition(double[] direction, StarAttraction starat, BlackHole[] blackHoles, int numBH) {
+        //System.out.println(this.getX()+" "+this.getY());
+        //System.out.println(this.velocity[0]+" "+this.velocity[1]+" "+this.getName()+" "+direction[0]+" "+direction[1]);
+        //System.out.println((int)direction[0]);
+        //double x = this.velocity[0] * (int)direction[0];
+        //System.out.println(x);
+        //double y = this.getX() + x;
+        //System.out.println(y);
+        //int z = (int) y;
+        //System.out.println(z);
         double x = this.getX(); //aktualna pozycja
         double y = this.getY();
         double next_x = this.getX()+((this.velocity[0]) * direction[0]); // następny x, zanim ustawimy go jako set x/y
@@ -65,5 +77,21 @@ class Star extends MassObject {
         }
         else{
         }
+        System.out.println(this.getX()+" "+this.getY());
     }
+    /*
+    public void checkStarAge(int years) {
+        if (getAge() + years > lifeExpectancy) {
+            // Transform into a black hole
+            BlackHole blackHole = new BlackHole(getPosition());
+            blackHole.setMass(getMass());
+            blackHole.setAge(getAge());
+            blackHole.setName(getName());
+            // ...
+        } else {
+            setAge(getAge() + years);
+        }
+    }
+
+     */
 }
