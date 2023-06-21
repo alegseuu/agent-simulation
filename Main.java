@@ -21,6 +21,9 @@ public class Main {
     private static final int maxPlanetAge = 100;
     private static final int maxMoonMass = 100;
     private static final int maxMoonAge = 100;
+    private static final int starMinDistance = 10;
+
+
     public static void main(String[] args) {
         /*
         // Get input from the user
@@ -30,8 +33,8 @@ public class Main {
         int numMoons = getInput("Enter the number of Moons: ");
         int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
         */
-        int numBlackHoles = 5;
-        int numStars = 20;
+        int numBlackHoles = 4;
+        int numStars = 10;
         int numPlanets = 0;
         int numMoons = 0;
         int numIterations = 10000;
@@ -78,7 +81,7 @@ public class Main {
             star.calculateNetForce(Forces, numBHoles);
             star.calculateAcceleration();
             star.calculateVelocity(star_attract);
-            star.nextPosition(direction);
+            star.nextPosition(direction, star_attract, blackHoles, numBHoles);
         }
     }
 
@@ -128,7 +131,7 @@ public class Main {
             double[] velocity = {0.0, 0.0};
             double[] position = {random.nextInt(maxX), random.nextInt(maxY)};
             String name = "Star" + Integer.toString(i);
-            stars[i] = new Star(mass, age, lifeExpectancy, velocity, position, name);
+            stars[i] = new Star(mass, age, lifeExpectancy, velocity, position, name, starMinDistance);
         }
 
         return stars;

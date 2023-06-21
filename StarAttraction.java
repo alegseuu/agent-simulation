@@ -26,6 +26,11 @@ class StarAttraction {
         //System.out.println(this.distance);
     }
 
+    public double checkDistance(Star star, BlackHole BH) { //nowa metoda, żeby nie nadpisywać pola distance przy samym sprawdzaniu
+        this.dx = Math.abs(star.getX() - BH.getX());
+        this.dy = Math.abs(star.getY() - BH.getY());
+        return Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+    }
 
 
     //public double getDistance(double[] vector) {
