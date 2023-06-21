@@ -1,4 +1,5 @@
 class MassObject {
+    protected double radius;
     private int mass;
     private int age;
     private String name;
