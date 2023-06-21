@@ -1,5 +1,4 @@
 import java.util.*;
-
 import java.awt.Canvas;
 import java.awt.Graphics;
 import javax.swing.JFrame;
@@ -7,6 +6,8 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     //simulation parameters
@@ -22,6 +23,7 @@ public class Main {
     private static final int maxMoonMass = 100;
     private static final int maxMoonAge = 100;
     private static final int starMinDistance = 10;
+    private static final String CSV_FILE_PATH = "simulation_data.csv";    //saving to a file
 
 
     public static void main(String[] args) {
@@ -167,6 +169,25 @@ public class Main {
         return moons;
     }
 
+    private static void saveSimulationData(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
+        try {
+            FileWriter writer = new FileWriter(CSV_FILE_PATH, true);
+            for (Star star : stars) {
+                writer.write(iteration + "," + star.getName() + "," + star.getPosition()[0] + "," + star.getPosition()[1] + "\n");
+            }
+            for (Planet planet : planets) {
+                writer.write(iteration + "," + planet.getName() + "," + planet.getPosition()[0] + "," + planet.getPosition()[1] + "\n");
+            }
+            for (Moon moon : moons) {
+                writer.write(iteration + "," + moon.getName() + "," + moon.getPosition()[0] + "," + moon.getPosition()[1] + "\n");
+            }
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     private static int getInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(prompt);
