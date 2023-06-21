@@ -1,5 +1,4 @@
 import java.util.*;
-
 import java.awt.Canvas;
 import java.awt.Graphics;
 import javax.swing.JFrame;
@@ -7,6 +6,8 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     //simulation parameters
@@ -27,21 +28,24 @@ public class Main {
 
 
     public static void main(String[] args) {
-        /*
+        
         // Get input from the user
         int numBlackHoles = getInput("Enter the number of BlackHoles: ");
         int numStars = getInput("Enter the number of Stars: ");
         int numPlanets = getInput("Enter the number of Planets: ");
         int numMoons = getInput("Enter the number of Moons: ");
         int numIterations = getInput("Enter the number of iterations: "); //czemu wlasciwie razy 100?
-        */
+        long sleep_time = 100;
+        
+        /*    //test
         int numBlackHoles = 10;
         int numStars = 10;
         int numPlanets = 10;
         int numMoons = 10;
         int numIterations = 10000;
-        long sleep_time = 10;
-
+        long sleep_time = 100;
+        */
+        
         // Create the objects
         BlackHole[] blackHoles = createBlackHoles(numBlackHoles);
         Star[] stars = createStars(numStars);
@@ -61,6 +65,7 @@ public class Main {
             }
             // Update positions and velocities of objects
             updatePositionsAndVelocities(i, blackHoles, stars, planets, moons, numBlackHoles, numStars, numPlanets);
+            saveDataToCSV(i, blackHoles, stars, planets, moons);    //saving to .csv file with all iterations
         }
     }
 
@@ -206,8 +211,44 @@ public class Main {
         return moons;
     }
 
+private static void saveDataToCSV(int iteration, BlackHole[] blackHoles, Star[] stars, Planet[] planets, Moon[] moons) {
+        try {
+            FileWriter writer = new FileWriter("simulation_data.csv", true);
 
+            if (iteration == 1) {
+                writer.append("Iteration, Type, Mass, Age, Name, PositionX, PositionY, VelocityX, VelocityY\n");
+            }
 
+            for (BlackHole blackHole : blackHoles) {
+                writer.append(iteration + ",BlackHole," + blackHole.getMass() + "," + blackHole.getAge() + "," + blackHole.getName() + ","
+                        + blackHole.getPosition()[0] + "," + blackHole.getPosition()[1] + ",0.0,0.0\n");
+            }
+
+            for (Star star : stars) {
+                writer.append(iteration + ",Star," + star.getMass() + "," + star.getAge() + ",," + star.getName() + ","
+                        + star.getPosition()[0] + "," + star.getPosition()[1] + ","
+                        + star.getVelocity()[0] + "," + star.getVelocity()[1] + "\n");
+            }
+
+            for (Planet planet : planets) {
+                writer.append(iteration + ",Planet," + planet.getMass() + "," + planet.getAge() + "," + planet.getName() + ","
+                        + planet.getPosition()[0] + "," + planet.getPosition()[1] + ","
+                        + planet.getVelocity()[0] + "," + planet.getVelocity()[1] + "\n");
+            }
+
+            for (Moon moon : moons) {
+                writer.append(iteration + ",Moon," + moon.getMass() + "," + moon.getAge() + "," + moon.getName() + ","
+                        + moon.getPosition()[0] + "," + moon.getPosition()[1] + ","
+                        + moon.getVelocity()[0] + "," + moon.getVelocity()[1] + "\n");
+            }
+
+            writer.flush();
+            writer.close();
+            System.out.println("Simulation data saved to simulation_data.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static int getInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
