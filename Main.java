@@ -97,7 +97,6 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
         ((Drawing) canvas).getParameters(numBH, numStars, numPlanets, numMoons, blackHoles, stars, planets, moons);
-        //updateSimulationState((Drawing) canvas);
         return (Drawing) canvas;
     }
 
@@ -167,9 +166,6 @@ public class Main {
         }
         return moons;
     }
-
-
-
 
     private static int getInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
