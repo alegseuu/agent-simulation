@@ -2,9 +2,9 @@ class MassObject {
     private int mass;
     private int age;
     private String name;
-    private double[] position;
+    private int[] position;
 
-    public MassObject(int mass, int age, String name, double[] position) {
+    public MassObject(int mass, int age, String name, int[] position) {
         this.mass = mass;
         this.age = age;
         this.name = name;
@@ -35,34 +35,26 @@ class MassObject {
         this.name = name;
     }
 
-    public double[] getPosition() {
+    public int[] getPosition() {
         return position;
     }
 
-    public double getX() {
+    public int getX() {
         return position[0];
     }
 
-    public double getY() {
+    public int getY() {
         return position[1];
     }
 
-    public double setX() {
-        return position[0];
-    }
-
-    public double setY(){
-        return position[1];
-    }
-
-    public void setPosition(double[] position) {
+    public void setPosition(int[] position) {
         this.position = position;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.position[0] = x;
     }
-    public void setY(double y) {
+    public void setY(int y) {
         this.position[1] = y;
     }
 }

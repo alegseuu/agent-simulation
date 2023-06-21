@@ -2,16 +2,10 @@ import java.util.List;
 
 class Planet extends MassObject {
     private double[] velocity;
-    private double[] acceleration;
-    private double[] netForce;
-    private double minDistance;
 
-    public Planet(int mass, int age, String name, double[] velocity, double[] position, int minDistance) {
+    public Planet(int mass, int age, String name, double[] velocity, int[] position) {
         super(mass, age, name, position);
         this.velocity = velocity;
-        this.acceleration = new double[]{0.0, 0.0};
-        this.netForce = new double[]{0.0, 0.0};
-        this.minDistance = (double) minDistance;
     }
 
     public double[] getVelocity() {
@@ -22,38 +16,30 @@ class Planet extends MassObject {
         this.velocity = velocity;
     }
 
-    public void calculateNetForce(double[][] forces, int numStars) {
-        netForce = new double[]{0.0, 0.0};
-        for(int i = 0; i < numStars; i++){
-            netForce[0] += forces[i][0];
-            netForce[1] += forces[i][1];
-            System.out.println(this.netForce[0]+" "+this.netForce[1]);
+    public double[] calculateNetForce(List<double[]> forces) {
+        double[] netForce = {0.0, 0.0};
+        for (double[] force : forces) {
+            netForce[0] += force[0];
+            netForce[1] += force[1];
         }
+        return netForce;
     }
 
-    public void calculateAcceleration() {
-        this.acceleration[0] = this.netForce[0] / ((double) this.getMass() / 10);
-        this.acceleration[1] = this.netForce[1] / ((double) this.getMass() / 10);
+    public double[] calculateAcceleration(double[] force) {
+        double[] acceleration = {force[0] / getMass(), force[1] / getMass()};
+        return acceleration;
     }
 
-    public void calculateVelocity(PlanetAttraction planet_attract) {
-        this.velocity[0] =Math.sqrt(this.acceleration[0] * planet_attract.dx / 100);
-        this.velocity[1] = Math.sqrt(this.acceleration[1] * planet_attract.dy /100);
+    public double[] calculateVelocity(double[] acceleration) {
+        velocity[0] += acceleration[0];
+        velocity[1] += acceleration[1];
+        return velocity;
     }
 
-    public void nextPosition(double[] direction, PlanetAttraction plant_at,
-                             Star[] stars, int numStars){
-        double dis;
-        boolean dist_check = false;
-        for(int i = 0; i < numStars; i++){
-            dis = plant_at.checkDistance(this, stars[i]);
-            if(dis <= minDistance){ dist_check = true; }
-        }
-        if(!dist_check){
-            this.setX( (this.getX()+((this.velocity[0]) * direction[0])));
-            this.setY( (this.getY()+(this.velocity[1]* direction[1])));
-        }
-        else{
-        }
+    public int[] nextPosition() {
+        int[] position = getPosition();
+        position[0] += velocity[0];
+        position[1] += velocity[1];
+        return position;
     }
 }
